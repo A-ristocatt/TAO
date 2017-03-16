@@ -28,6 +28,12 @@ app.get(['/', '/index.html'], function (req, res) {
 
 io.on('connection', function (socket) {
   console.log(socket);
+  socket.emit("connected", { some: 'data' });
+
+  socket.on('chat', function (data) {
+    console.log(data);
+    socket.emit('sendMessage', { data: data });
+  });
 });
 
 http.listen(3000, function () {
